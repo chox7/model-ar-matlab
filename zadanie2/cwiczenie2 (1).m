@@ -1,0 +1,27 @@
+function cwiczenie2(zestaw)
+    for p = 1:10
+        fprintf("\n p = %d\t", p);
+        [ARr,Vr]=licz_wsp_AR(zestaw ,p);
+        dc_12 = DC(ARr, 1, 2);
+        a_12 = aij(ARr, 1, 2);
+        fprintf("DC^2_12 = %d\t", dc_12)
+   
+        dc_21 = DC(ARr, 2, 1);
+        a_21 = aij(ARr, 2, 1);
+        fprintf("DC^2_21 = %d\n", dc_21)
+        
+        fprintf("a_12 = %d\t", a_12)
+        fprintf("a_21 = %d\t", a_21)
+    end
+end
+
+function dc = DC(ARr, i, j)
+    dc = sum(ARr(i,j, :).^2,3);
+end
+
+function a = aij(ARr, i, j)
+    a = ARr(i, j, :);
+end
+%funkcje cwiczenie2 nalezy wywolac na wczesniej przygotowanym zestawie (w
+%notatkinu liczAR_zestawy; funkcja przypisuje rzędowi miary DC^2 dla a_12
+%oraz a_21 + wspolczynniki

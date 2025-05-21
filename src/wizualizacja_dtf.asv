@@ -1,0 +1,38 @@
+function wizualizacja_dtf(f, n, dtf, labels)
+    figure('Name', 'DTF', 'Position', [100, 100, 1000, 1000]);
+    tiledlayout(n, n, 'Padding', 'compact');
+
+    for i = 1:n
+        for j = 1:n
+            nexttile
+
+            dtf_ij = dtf(1:end, i, j);
+
+            if i == j
+                plot(f, dtf_ij, 'Color', [1, 0.5, 0]);  % Pomarańczowy
+            else
+                plot(f, dtf_ij, 'b');  % Niebieski
+            end
+            ylim([0, 1.1]);
+            
+            if labels == true
+                title(sprintf('Z kanału %d do %d', j, i));
+            end
+
+            if labels == fa
+                title(sprintf('Z kanału %d do %d', j, i));
+            end
+
+            if i ~= n
+                set(ax, 'XTickLabel', []);
+            end
+
+            if j ~= 1
+                set(ax, 'YTickLabel', []);
+            end
+
+        end
+    end
+
+    sgtitle('DTF');
+end

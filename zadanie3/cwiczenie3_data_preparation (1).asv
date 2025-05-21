@@ -1,0 +1,32 @@
+% Parametry
+Fs = 128;              % Częstotliwość próbkowania
+t = 0:1000 - 1;        % Wektor czasu (w próbkach, nie sekundach)
+T = t/Fs;              % Wektor czasu [s]
+
+% Kanał 1: Sinusoida bez przesunięcia fazowego
+sin_1 = sin(2*pi*32*(t/Fs));  % 32 Hz, phi = 0
+
+% Kanał 2: Sinusoida z przesunięciem fazowym pi/4 i szumem
+sin_2 = sin(2*pi*32*(t/Fs) + pi/4);
+sin_2 = sin_2 + 0.2 * randn(1, 1000);  % Dodanie szumu
+
+% Kanał 3: Sinusoida z przesunięciem fazowym pi/2 i szumem
+sin_3 = sin(2*pi*32*(t/Fs) + pi/2);
+sin_3 = sin_3 + 0.6 * randn(1, 1000);  % Dodanie szumu
+
+% Utworzenie sygnału dwukanałowego
+sinuses = zeros(2, 1000);
+sinuses(1, :) = sin_1;
+sinuses(2, :) = sin_2;
+sinuses(3, :) = sin_3;
+
+% Wykres obu kanałów
+figure;
+plot(T, sinuses(1, :), 'b', 'LineWidth', 1.5); hold on;
+plot(T, sinuses(2, :), 'r', 'LineWidth', 1.5);
+plot(T, sinuses(3, :), 'g', 'LineWidth', 1.5);
+grid on;
+xlabel('Czas [s]');
+ylabel('Amplituda');
+title('Porównanie trzech sygnałów sinusoidalnych');
+legend('Kanał 1: \phi = 0', 'Kanał 2: \phi = \pi/4 + szum', 'Kanał 3: \phi = \pi/2 + (większy) szum');
