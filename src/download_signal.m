@@ -51,7 +51,37 @@ function [data, fs, channels_names, tags] = download_signal(raw_file, xml_file, 
     end
 
 
-    % wczytywanie tagow 
+    % wczytywanie tagow
     doc=xmlread(tag_file);
-    file_name = string(doc.getElementsByTagName('rs:sourceFileName').item(0).getTextContent);
+
+    tags_xml_tag = doc.getElementsByTagName('tags').item(0);
+    tags_xml = tags_xml_tag.getElementsByTagName('tag');
+    tags(tags_xml.getLength) = struct();
+    for k = 0:tags_xml.getLength-1
+        tag = tags_xml.item(k);
+        attributes = tag.getAttributes();
+        nAttr = attributes.getLength();
+
+        attributesMap = struct();
+        for i = 0:nAttr-1
+            attr = attributes.item(i);
+            name = char(attr.getName());
+            value = char(attr.getValue());
+            
+            num = str2double(value);
+            if ~isnan(num)
+                attributesMap.(name) = num;
+            else
+                attributesMap.(name) = value;
+            end
+        end
+
+
+        % TODO: dodac strone
+
+        tags(k+1) = attributesMap;
+                   
+    end
+
+
 end

@@ -47,6 +47,28 @@ function [data, fs, channels_names, tags] = download_signal(raw_file, xml_file, 
     
     % przeskalowywanie danych
     for ch = 1:channels_num
-        data(ch, :) = calibration_gains(ch) .* Data(ch, :) + calibration_offsets(ch);
+        data(ch, :) = calibration_gains(ch) .* data(ch, :) + calibration_offsets(ch);
     end
+
+
+    % wczytywanie tagow 
+    tags(10) = struct();
+    doc=xmlread(tag_file);
+
+    tags_xml_tag = doc.getElementsByTagName('tags').item(0);
+    tags_xml = tags_xml_tag.getElementsByTagName('tag');
+    for k = 0:tags_xml.getLength-1
+        tag = tags_xml.item(k);
+        attributes = tag.getAttributes();
+        nAttr = attributes.getLength();
+        for i = 0:nAttr-1
+            attr = attributes.item(i);
+            name = char(attr.getName());
+            value = char(attr.getValue());
+        
+        end
+                   
+    end
+
+
 end
