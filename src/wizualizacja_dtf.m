@@ -1,5 +1,5 @@
-function wizualizacja_dtf(f, n, dtf, labels)
-    figure('Name', 'DTF', 'Position', [100, 100, 1200, 1200]);  % Większa figura
+function wizualizacja_dtf(f, n, dtf, labels, title_plot)
+    figure('Name', "DTF: " + title_plot, 'Position', [100, 100, 1200, 1200]);  % Większa figura
     tiledlayout(n, n, 'Padding', 'tight', 'TileSpacing', 'compact');  % Kompaktowy układ
 
     for i = 1:n
@@ -14,6 +14,8 @@ function wizualizacja_dtf(f, n, dtf, labels)
             else
                 plot(f, dtf_ij, 'b');  % Niebieski
             end
+
+            xlim([min(f), max(f)]);
             ylim([0, 1.1]);
 
             if i == 1
@@ -35,5 +37,5 @@ function wizualizacja_dtf(f, n, dtf, labels)
         end
     end
 
-    sgtitle('DTF');
+    sgtitle("DTF: " + title_plot);
 end

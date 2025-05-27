@@ -1,5 +1,5 @@
-function wizualizacja_ndtf(f, n, ndtf, labels)
-    figure('Name', 'NDTF', 'Position', [100, 100, 1200, 1200]);  % Większa figura
+function wizualizacja_ndtf(f, n, ndtf, labels, title_plot)
+    figure('Name', "NDTF: " + title_plot, 'Position', [100, 100, 1200, 1200]);  % Większa figura
     tiledlayout(n, n, 'Padding', 'tight', 'TileSpacing', 'compact');  % Kompaktowy układ
 
     for i = 1:n
@@ -14,7 +14,9 @@ function wizualizacja_ndtf(f, n, ndtf, labels)
             else
                 plot(f, ndtf_ij, 'b');  % Niebieski
             end
-            ylim([0, 1.1]);
+
+            xlim([min(f), max(f)]);
+            ylim([min(ndtf_ij), max(ndtf_ij)]);
 
             if i == 1
                 title(labels{j}, 'FontSize', 12);
@@ -35,5 +37,5 @@ function wizualizacja_ndtf(f, n, ndtf, labels)
         end
     end
 
-    sgtitle('NDTF');
+    sgtitle("NDTF: " + title_plot);
 end

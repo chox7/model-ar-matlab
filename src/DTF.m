@@ -1,7 +1,7 @@
 function [DTF, NDTF, freqs] = DTF(dane, p, Fs)
 
     % Przygotowanie wektora częstotliwości
-    freqs = 0:(1/Fs):39;
+    freqs = 0:(1/Fs):40;
 
     % Upewnij się, że dane są w formacie [kanały x próbki]
     if isvector(dane)
