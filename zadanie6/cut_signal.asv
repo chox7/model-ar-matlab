@@ -6,8 +6,8 @@ function [lewa_array, prawa_array] = cut_signal(syg, tags, fs, t_start, t_end)
     for i = 1:length(tags)
         tag = tags{i};
         idx_start = round((tag.position + t_start) * fs) + 1;
-        idx_end = idx_start + dlugosc - 1;
-        
+        idx_end = idx_end + dlugosc - 1;
+
         if idx_start >= 1 && idx_end <= size(syg, 2)
             segment = syg(: , idx_start : idx_end);
 
