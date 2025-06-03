@@ -17,9 +17,20 @@ rank = 9;
 [dtf_lewa_po, ndtf_lewa_po, psd_lewa_po, freqs] = process_dtf(lewa_po, rank, fs_down);
 [dtf_prawa_po, ndtf_prawa_po, psd_prawa_po, freqs] = process_dtf(prawa_po, rank, fs_down);
 
-
+% Wykresy DTF
+% Skala dla y:
+% - dla dtf: 0 - 1.1
+% - dla psd: 0 - max(psd)
 compare_dtf(freqs, dtf_lewa_przed, dtf_prawa_przed, psd_lewa_przed, psd_prawa_przed, channels_to_pick, "DTF lewa/prawa przed", ["lewa", "prawa"], "DTF");
 compare_dtf(freqs, dtf_lewa_po, dtf_prawa_po, psd_lewa_po, psd_prawa_po, channels_to_pick, "DTF lewa/prawa po", ["lewa", "prawa"], "DTF");
 
 compare_dtf(freqs, dtf_lewa_przed, dtf_lewa_po, psd_lewa_przed, psd_lewa_po, channels_to_pick, "DTF lewa przed/po", ["przed", "po"], "DTF");
 compare_dtf(freqs, dtf_prawa_przed, dtf_prawa_po, psd_prawa_przed, psd_prawa_po, channels_to_pick, "DTF prawa przed/po", ["przed", "po"], "DTF");
+
+% Wykresy NDTF
+% Skala dla y: 0 - max(psd)
+compare_dtf(freqs, ndtf_lewa_przed, ndtf_prawa_przed, psd_lewa_przed, psd_prawa_przed, channels_to_pick, "NDTF lewa/prawa przed", ["lewa", "prawa"], "NDTF");
+compare_dtf(freqs, ndtf_lewa_po, ndtf_prawa_po, psd_lewa_po, psd_prawa_po, channels_to_pick, "NDTF lewa/prawa po", ["lewa", "prawa"], "NDTF");
+
+compare_dtf(freqs, ndtf_lewa_przed, ndtf_lewa_po, psd_lewa_przed, psd_lewa_po, channels_to_pick, "NDTF lewa przed/po", ["przed", "po"], "NDTF");
+compare_dtf(freqs, ndtf_prawa_przed, ndtf_prawa_po, psd_prawa_przed, psd_prawa_po, channels_to_pick, "NDTF prawa przed/po", ["przed", "po"], "NDTF");

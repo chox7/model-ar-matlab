@@ -24,30 +24,33 @@ function [DTF, NDTF, S_f, freqs] = DTF(dane, p, Fs)
         z = exp(1i * 2 * pi * f / Fs);
         A0 = eye(k);
         for j = 1:p
-            A0 = A0 - squeeze(AR(:, :, j)) * z^(-j);
+            A0 = A0 - AR(:, :, j) * z^(-j);
         end
 
         A_f(i, :, :) = A0;
         H = inv(A0);
         H_f(i, :, :) = H;
-        H_f_conj_hermit(i, :, :) = H';  % Sprzężenie hermitowskie
 
         % Widmo mocy sygnału
         temp = H * Vr;
         S_f(i, :, :) = temp * H';
     end
 
-    licznik = abs(H_f).^2;
-   
+    NDTF = zeros(nf, k, k);
     DTF = zeros(nf, k, k);
     for f = 1:nf
-        for i = 1:k
-            mianownik_sum = 0;
-            for m = 1:k
-                mianownik_sum = mianownik_sum + abs(H_f(f, i, m)).^2;
-            end
+        H = squeeze(H_f(f, :, :));
+        H2 = abs(H).^2;
+        NDTF(f, :, :) = H2;
 
-            DTF(f, i, 1:end) = licznik(f, i, 1:end)./ mianownik_sum;
+        for i = 1:k
+            denom = sum(H2(i, :));
+            if denom ~= 0
+                DTF()
+            for m = 1:k
+                mianownik_sum = mianownik_sum + licznik(f, i, m);
+            end
+            DTF(f, i, 1:end) = licznik(f, i, 1:end)/ mianownik_sum;
         end
     end
 
