@@ -1,4 +1,4 @@
-function compare_dtf(t, f, dtf, psd, channels, title_plot, dtf_type)
+function compare_tf_map(t, f, dtf, psd, channels, title_plot, dtf_type)
     %COMPARE_DTF Wizualizacja porównawcza miar kierunkowej łączności (DTF/NDTF) i widm mocy.
     %
     %   compare_dtf(f, dtf, psd, channels, title_plot, dtf_type)
@@ -10,7 +10,7 @@ function compare_dtf(t, f, dtf, psd, channels, title_plot, dtf_type)
     %       t          - Wektor czasu (1 x T)
     %       f          - Wektor częstotliwości [1 x F]
     %       dtf        - Macierz DTF/NDTF [F x n x n X T]
-    %       psd        - Macierz widm mocy dla kanałów [n x n x T]
+    %       psd        - Macierz widm mocy dla kanałów [F x n x T]
     %       channels   - Komórka z nazwami kanałów {1 x n}
     %       title_plot - Tytuł całej figury (string)
     %       dtf_type   - Typ zastosowanej miary (np. 'DTF', 'NDTF')
@@ -30,21 +30,16 @@ function compare_dtf(t, f, dtf, psd, channels, title_plot, dtf_type)
             nexttile;
             ax = gca;  % Pobranie uchwytu osi
 
-            dtf_ij = dtf(:, i, j, :);
+            dtf_ij = squeeze(dtf(:, i, j, :));
 
             if i == j
-                imagesc(t, f, abs(psd(:, i, j, :)));
-                caxis([0, c_max]);
+                imagesc('XData', t, 'YData', f, 'CData', squeeze(abs(psd(:, i, j, :))));
             else
-                plot(f, dtf1_ij, 'b'); hold on % Niebieski
-                plot(f, dtf2_ij, 'r');  %Czerwony
-                if dtf_type == "DTF"
-                    ylim([0, 1.1]);
-                else
-                    ylim([0, y_max]);
-                end
+                imagesc('XData', t, 'YData', f, 'CData', dtf_ij);
             end
-            xlim([min(f), max(f)]);
+            set(gca, 'YDir', 'normal');  % lub 'reverse'
+            %caxis([0, c_max]);
+            %xlim([min(f), max(f)]);
 
             if i == 1
                 title("Z " + channels{j}, 'FontSize', 12);
@@ -64,11 +59,5 @@ function compare_dtf(t, f, dtf, psd, channels, title_plot, dtf_type)
             end
         end
     end
-
     sgtitle(title_plot);
-
-    lgd = legend(["Widmo mocy: " + labels(1), "Widmo mocy: " + labels(2), ...
-        dtf_type + ": " + labels(1), dtf_type + ": " + labels(2)], ...
-        'Location', 'eastoutside', 'Orientation','vertical');
-    lgd.Layout.Tile = 'east';
 end

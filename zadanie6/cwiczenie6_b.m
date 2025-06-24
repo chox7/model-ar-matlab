@@ -1,9 +1,10 @@
 addpath("../src/")
 addpath("../data/mati_ruch/")
 
+channels_to_pick = ["C3", "Cz", "C4", "P3", "Pz", "P4"];
 [data, fs, channels, tags] = download_signal("mati_ruch.obci.raw", "mati_ruch.obci.xml", "mati_ruch.obci.tag");
 [preprocessed_data, fs_down] = preprocess_data(data, channels, channels_to_pick, fs);
-channels_to_pick = ["C3", "Cz", "C4", "P3", "Pz", "P4"];
+
 
 dtf_lewa_list = {};
 ndtf_lewa_list = {};
